@@ -1,0 +1,61 @@
+app_Data/
+
+# Ignore Unity-specific folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Assets/StreamingAssets/
+
+# Ignore user-specific and IDE-specific files
+*.csproj
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.suo
+*.sln
+*.swp
+*.tmp
+*.log
+*.pidb
+*.booproj
+*.unityproj
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore asset cache files
+*.asset
+*.prefab
+*.unity
+
+# Ignore Unity cache
+*.db
+*.pdb
+*.svd
+
+# Ignore build artifacts
+*.apk
+*.aab
+*.app
+*.appx
+*.dmg
+*.exe
+*.ipa
+*.jar
+*.msi
+
+# Ignore crash logs
+crashlytics-build.log
+
+# Ignore project-specific temporary files
+*.tmp
+*.bak
+*.swp
+
+# Unity 2022+ version specific
+.vscode/
+.idea/
