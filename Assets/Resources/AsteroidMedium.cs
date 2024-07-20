@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class AsteroidLarge : MonoBehaviour
+public class AsteroidMedium : MonoBehaviour
 {
-    public GameObject prefabAsteroidMedium;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,17 +18,16 @@ public class AsteroidLarge : MonoBehaviour
     {
         Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
         Vector3 position = transform.position;
-        for (int i = 0; i < Game.asteroidLargeSplitNum; i++)
+        for (int i = 0; i < Game.asteroidMediumSplitNum; i++)
         {
             Vector3 v = Random.insideUnitSphere.normalized;
             v.y = 0;
             Vector3 p = 0.5f * transform.localScale.x * v + transform.position;
-            GameObject o = Instantiate(prefabAsteroidMedium, p, Random.rotation);
+            GameObject o = Instantiate(Game.prefabAsteroidSmall, p, Random.rotation);
             Rigidbody rb = o.GetComponent<Rigidbody>();
-            rb.velocity = GetComponent<Rigidbody>().velocity + Game.asteroidLargeSplitVelocity * v;
-            rb.angularVelocity = Game.asteroidLargeSplitRandomRotationScale * v;
+            rb.velocity = GetComponent<Rigidbody>().velocity + Game.asteroidMediumSplitVelocity * v;
+            rb.angularVelocity = Game.asteroidMediumSplitRandomRotationScale * v;
             Destroy(gameObject);
         }
-
     }
 }

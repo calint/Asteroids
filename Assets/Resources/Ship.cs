@@ -6,16 +6,41 @@ public class Ship : MonoBehaviour
     public float turnSpeed = 90.0f;
     public GameObject model1;
     public GameObject model2;
-    public GameObject prefabBullet;
     private Vector3 velocity;
     public float fireInterval = 1;
     public float bulletVelocity = 10;
     private float nextFireTime = 0;
+    private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Get the Rigidbody component attached to this GameObject
+        rb = GetComponent<Rigidbody>();
+
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+
         model1.SetActive(true);
         model2.SetActive(false);
+    }
+
+    void FixedUpdate()
+    {
+        // Reset rotation on the X and Z axes
+        Vector3 currentRotation = transform.eulerAngles;
+        currentRotation.x = -90;
+        currentRotation.z = 0;
+        transform.eulerAngles = currentRotation;
+
+        // Reset angular velocity on the X and Z axes
+        Vector3 currentAngularVelocity = rb.angularVelocity;
+        currentAngularVelocity.x = 0;
+        currentAngularVelocity.z = 0;
+        rb.angularVelocity = currentAngularVelocity;
+
+        Vector3 position = transform.position;
+        position.y = 0;
+        transform.position = position;
     }
 
     void Update()
@@ -25,7 +50,6 @@ public class Ship : MonoBehaviour
         {
             model1.SetActive(false);
             model2.SetActive(true);
-            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
             rb.AddForce(transform.up * engineThrustFactor, ForceMode.Impulse);
         }
         else
@@ -49,9 +73,9 @@ public class Ship : MonoBehaviour
         if (Input.GetKey(KeyCode.J) && Time.realtimeSinceStartup > nextFireTime)
         {
             nextFireTime = Time.realtimeSinceStartup + fireInterval;
-            GameObject blt = Instantiate(prefabBullet, transform.position + 1.5f * transform.up, transform.rotation);
-            Rigidbody rb = blt.GetComponent<Rigidbody>();
-            rb.AddForce(transform.up * bulletVelocity, ForceMode.Impulse);
+            GameObject blt = Instantiate(Game.prefabShipBullet, transform.position + 1.5f * transform.up, transform.rotation);
+            Rigidbody brb = blt.GetComponent<Rigidbody>();
+            brb.AddForce(transform.up * bulletVelocity, ForceMode.Impulse);
         }
 
         // Move the ship according to its velocity
