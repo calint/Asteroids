@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    public float acceleration = 5.0f;
+    public float engineThrustFactor = 2;
     public float turnSpeed = 90.0f;
     public GameObject model1;
     public GameObject model2;
@@ -25,7 +25,8 @@ public class Ship : MonoBehaviour
         {
             model1.SetActive(false);
             model2.SetActive(true);
-            velocity -= transform.forward * acceleration * Time.deltaTime;
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.AddForce(transform.up * engineThrustFactor, ForceMode.Impulse);
         }
         else
         {
@@ -55,5 +56,11 @@ public class Ship : MonoBehaviour
 
         // Move the ship according to its velocity
         transform.position += velocity * Time.deltaTime;
+        transform.position = Utils.RollOver(transform.position);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(gameObject.name + " OnCollisionEnter " + collision.gameObject.name);
     }
 }

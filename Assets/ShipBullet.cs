@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
@@ -12,11 +11,15 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Utils.IsInGameArea(transform.position))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.name);
+        Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
         Destroy(gameObject);
     }
 }
