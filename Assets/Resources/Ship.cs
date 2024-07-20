@@ -75,7 +75,7 @@ public class Ship : MonoBehaviour
             nextFireTime = Time.realtimeSinceStartup + fireInterval;
             GameObject blt = Instantiate(Game.prefabShipBullet, transform.position + 1.5f * transform.up, transform.rotation);
             Rigidbody brb = blt.GetComponent<Rigidbody>();
-            brb.AddForce(transform.up * bulletVelocity, ForceMode.Impulse);
+            brb.velocity = transform.up * bulletVelocity;
         }
 
         // Move the ship according to its velocity

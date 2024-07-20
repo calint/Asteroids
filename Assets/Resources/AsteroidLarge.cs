@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class AsteroidLarge : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-
+        Game.asteroidCount++;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position = Game.RollOver(transform.position);
@@ -16,19 +14,19 @@ public class AsteroidLarge : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
-        Vector3 position = transform.position;
+        Rigidbody rb = GetComponent<Rigidbody>();
         for (int i = 0; i < Game.asteroidLargeSplitNum; i++)
         {
-            Vector3 v = Random.insideUnitSphere.normalized;
-            v.y = 0;
-            Vector3 p = 0.5f * transform.localScale.x * v + transform.position;
-            GameObject o = Instantiate(Game.prefabAsteroidMedium, p, Random.rotation);
-            Rigidbody rb = o.GetComponent<Rigidbody>();
-            rb.velocity = GetComponent<Rigidbody>().velocity + Game.asteroidLargeSplitVelocity * v;
-            rb.angularVelocity = Game.asteroidLargeSplitRandomRotationScale * v;
-            Destroy(gameObject);
+            GameObject o = Instantiate(Game.prefabAsteroidMedium);
+            Vector3 rnd = Random.insideUnitSphere.normalized;
+            rnd.y = 0;
+            o.transform.position = transform.position + transform.localScale.x * rnd;
+            o.transform.rotation = Random.rotation;
+            Rigidbody orb = o.GetComponent<Rigidbody>();
+            orb.velocity = rb.velocity + Game.asteroidLargeSplitVelocity * rnd;
+            orb.angularVelocity = Game.asteroidLargeSplitRandomRotationScale * rnd;
         }
-
+        Destroy(gameObject);
+        Game.asteroidCount--;
     }
 }
