@@ -56,7 +56,7 @@ public class Ship : MonoBehaviour
 
         // Move the ship according to its velocity
         transform.position += velocity * Time.deltaTime;
-        transform.position = Utils.RollOver(transform.position);
+        transform.position = Game.RollOver(transform.position);
     }
 
     void OnCollisionEnter(Collision collision)
